@@ -1,3 +1,5 @@
+from datetime import datetime
+
 menu_options = ["1. Entrar", "2. Criar usuário", "3. Listar contas", "4. Sair"]
 user_options = ["1. Depositar", "2. Sacar", "3. Ver extrato", "4. Criar conta", "5. Sair"]
 WITHDRAWAL_LIMIT = 500
@@ -46,7 +48,12 @@ def view_extract(balance, /, *, transactions):
 
 def create_user():
     name = input("Digite seu nome: ")
-    birth_date = input("Digite sua data de nascimento: ")
+    try:
+        birth_date = input("Digite sua data de nascimento (DD/MM/YYYY): ")
+        birth_date = datetime.strptime(birth_date, "%d/%m/%Y")
+    except:
+        print("Data de nascimento inválida. Tente novamente.\n\n")
+        return create_user()
     try:
         cpf = int(input("Digite seu CPF (apenas números): "))
     except:
